@@ -1,0 +1,34 @@
+/pri/abal/V_Unit/vicuna/rtl/vproc_pkg.sv
+/pri/abal/V_Unit/vicuna/rtl/vproc_config.sv
+/pri/abal/V_Unit/vicuna/rtl/*.sv
+//
+/pri/abal/V_Unit/vicuna/ibex/rtl/ibex_pkg.sv
+/pri/abal/V_Unit/vicuna/ibex/rtl/ibex_tracer_pkg.sv
+/pri/abal/V_Unit/vicuna/ibex/vendor/lowrisc_ip/ip/prim/rtl/prim_ram_1p_pkg.sv
+/pri/abal/V_Unit/vicuna/ibex/rtl/*.sv
+/pri/abal/V_Unit/vicuna/ibex/syn/rtl/prim_clock_gating.v
+
+
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_alu.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_cache.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_decoder.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_dispatcher.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_elem.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_lsu.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_mul_block.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_mul.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_pending_wr.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_pipeline_wrapper.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_pipeline.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_queue.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_result.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_sld.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_unit_mux.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_unit_wrapper.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_vreg_wr_mux.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_vregfile.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_vregpack.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_vregunpack.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_xif.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_core.sv
+//      /pri/abal/V_Unit/vicuna/rtl/vproc_top.sv

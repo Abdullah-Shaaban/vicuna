@@ -19,7 +19,7 @@ QUESTA_TCL := $(addprefix $(SIM_DIR),sim_questa.tcl)
 VSIM       ?= vsim
 
 # project directory
-PROJ_DIR_TMP := $(shell mktemp -d)
+PROJ_DIR_TMP := /pri/abal/V_Unit/vicuna/sim/tmp # $(shell mktemp -d)
 PROJ_DIR     ?= $(PROJ_DIR_TMP)
 
 # select the core to use as main processor (defaults to Ibex)
@@ -47,8 +47,10 @@ DCACHE_LINE_W ?= $(shell echo $$(( $(VMEM_W) * 2 )))
 all: verilator
 
 # vector coprocessor configuration file generation (defines VMEM_W and VREG_W)
-VPROC_CONFIG_PKG := $(PROJ_DIR)/vproc_config.sv
-include $(SIM_DIR)/../config.mk
+VMEM_W	?= 32	# Copied here because it's passed to Questa. If empty (due to commenting config.mk), it misses up other variables
+# VPROC_CONFIG_PKG := $(PROJ_DIR)/vproc_config.sv
+VPROC_CONFIG_PKG := /pri/abal/V_Unit/vicuna/rtl/vproc_config.sv
+# include $(SIM_DIR)/../config.mk
 
 verilator-version-check:
 	@version=`verilator --version | awk '{print $$2}'`;                       \
@@ -113,6 +115,7 @@ $(PROJ_DIR)/obj_dir/Vvproc_top.mk: verilator-version-check $(VPROC_CONFIG_PKG)
 	    vproc_vregpack.sv vproc_vregunpack.sv --top-module vproc_top          \
 	    --clk clk_i $$options $$cflags --exe verilator_main.cpp
 
+#
 vivado: $(VPROC_CONFIG_PKG)
 	cd $(PROJ_DIR) && vivado -mode batch -source $(VIVADO_TCL)                \
 	    -tclargs $(SIM_DIR)/../ $(CORE_DIR) $(VPROC_CONFIG_PKG)               \
@@ -122,6 +125,8 @@ vivado: $(VPROC_CONFIG_PKG)
 	    DCACHE_SZ=$(DCACHE_SZ) DCACHE_LINE_W=$(DCACHE_LINE_W)"                \
 	    $(abspath $(TRACE_FILE)) $(abspath $(PROG_PATHS)) $(TRACE_SIGS)
 
+#
+# waves_path = /pri/abal/V_Unit/vicuna/sim/waveforms/wave.wlf
 questa: $(VPROC_CONFIG_PKG)
 	cd $(PROJ_DIR) && $(VSIM) -batch -do 'do $(QUESTA_TCL)                    \
 	    $(SIM_DIR).. $(CORE_DIR) $(VPROC_CONFIG_PKG)                          \

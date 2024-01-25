@@ -5,8 +5,8 @@
 
 module vproc_core import vproc_pkg::*; #(
         // XIF interface configuration (must be provided when instantiating this module)
-        parameter int unsigned           XIF_ID_W                 = 0, // width of instruction IDs
-        parameter int unsigned           XIF_MEM_W                = 0, // memory interface width
+        parameter int unsigned           XIF_ID_W                 = 3, // width of instruction IDs
+        parameter int unsigned           XIF_MEM_W                = 32, // memory interface width
 
         // Vector register file configuration
         parameter vreg_type              VREG_TYPE                = vproc_config::VREG_TYPE,
@@ -33,7 +33,7 @@ module vproc_core import vproc_pkg::*; #(
         parameter int unsigned           INSTR_QUEUE_SZ           = vproc_config::INSTR_QUEUE_SZ,
         parameter bit [BUF_FLAGS_W-1:0]  BUF_FLAGS                = vproc_config::BUF_FLAGS,
 
-        parameter bit                    DONT_CARE_ZERO           = 1'b0, // init don't cares to 0
+        parameter bit                    DONT_CARE_ZERO           = 1'b1, // init don't cares to 0
         parameter bit                    ASYNC_RESET              = 1'b0  // rst_ni is async
     )(
         input  logic                     clk_i,
@@ -128,12 +128,14 @@ module vproc_core import vproc_pkg::*; #(
 
     typedef int unsigned ASSIGN_VADDR_RD_W_RET_T[VPORT_RD_CNT];
     typedef int unsigned ASSIGN_VADDR_WR_W_RET_T[VPORT_WR_CNT];
-    function static ASSIGN_VADDR_RD_W_RET_T ASSIGN_VADDR_RD_W();
+    // function static ASSIGN_VADDR_RD_W_RET_T ASSIGN_VADDR_RD_W();
+    function ASSIGN_VADDR_RD_W_RET_T ASSIGN_VADDR_RD_W();
         for (int i = 0; i < VPORT_RD_CNT; i++) begin
             ASSIGN_VADDR_RD_W[i] = 5 + $clog2(VREG_W / VPORT_RD_W[i]);
         end
     endfunction
-    function static ASSIGN_VADDR_WR_W_RET_T ASSIGN_VADDR_WR_W();
+    // function static ASSIGN_VADDR_WR_W_RET_T ASSIGN_VADDR_WR_W();
+    function ASSIGN_VADDR_WR_W_RET_T ASSIGN_VADDR_WR_W();
         for (int i = 0; i < VPORT_WR_CNT; i++) begin
             ASSIGN_VADDR_WR_W[i] = 5 + $clog2(VREG_W / VPORT_WR_W[i]);
         end
@@ -142,7 +144,8 @@ module vproc_core import vproc_pkg::*; #(
     localparam int unsigned VADDR_RD_W[VPORT_RD_CNT] = ASSIGN_VADDR_RD_W();
     localparam int unsigned VADDR_WR_W[VPORT_WR_CNT] = ASSIGN_VADDR_WR_W();
 
-    function static int unsigned MAX_VPORT_RD_SLICE(
+    // function static int unsigned MAX_VPORT_RD_SLICE(
+    function int unsigned MAX_VPORT_RD_SLICE(
         int unsigned SRC[VPORT_RD_CNT], int unsigned OFFSET, int unsigned CNT
     );
         MAX_VPORT_RD_SLICE = 0;
@@ -152,7 +155,8 @@ module vproc_core import vproc_pkg::*; #(
             end
         end
     endfunction
-    function static int unsigned MAX_VPORT_WR_SLICE(
+    // function static int unsigned MAX_VPORT_WR_SLICE(
+    function int unsigned MAX_VPORT_WR_SLICE(
         int unsigned SRC[VPORT_WR_CNT], int unsigned OFFSET, int unsigned CNT
     );
         MAX_VPORT_WR_SLICE = 0;
@@ -1063,7 +1067,7 @@ module vproc_core import vproc_pkg::*; #(
         .PIPE_CNT           ( PIPE_CNT                            ),
         .PIPE_UNITS         ( PIPE_UNITS                          ),
         .PIPE_VPORT_WR      ( PIPE_VPORT_WR                       ),
-        .TIMEPRED           ( BUF_FLAGS[BUF_VREG_WR_MUX_TIMEPRED] ),
+        .TIMEPRED           ( '0 ),
         .DONT_CARE_ZERO     ( DONT_CARE_ZERO                      )
     ) vreg_wr_mux (
         .clk_i              ( clk_i                               ),

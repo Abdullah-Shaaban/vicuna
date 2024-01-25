@@ -1,0 +1,38 @@
+
+# specify the module top scope
+set_option top vproc_top
+
+# specify results location as projectwdir
+set_option projectwdir "./results"
+set PROJECT_DIR_PATH "."
+
+# global spyglass settings
+source spyglassCommon.tcl
+
+# Design files
+set ibex_dv_utils "/pri/abal/V_Unit/vicuna/ibex/vendor/lowrisc_ip/dv/sv/dv_utils/"
+set ibex_prim "/pri/abal/V_Unit/vicuna/ibex/vendor/lowrisc_ip/ip/prim/rtl/"
+set_option incdir $ibex_prim $ibex_dv_utils 
+read_file -type sourcelist "/pri/abal/V_Unit/vicuna/pwr/rtl_files.fl"
+
+
+# This variable is used to enable calibration flow
+set ENABLE_CALIBRATION_FLOW yes
+# set calibration corner
+set PE_CALIBRATION_DATA_DIR_PATH /pri/abal/V_Unit/vicuna/methodology/DesignKit/scripts/spyglass/power/calibrationData/TC1
+
+# Need this to avoid error "Clock signal(s) in the design could not be mapped to VCD/FSDB data (Simulation top name ...)"
+set_parameter pe_sim_minclk 4
+
+# Specify technology libraries
+read_file -type gateslib "/pri/abal/V_Unit/synth_lib/tcbn55lpbwp7t/200b/liberty/20200311/tcbn55lpbwp7t_1V0SS-40C.lib"
+
+# source the standard goal options file
+source power_rtl_goals.tcl
+
+# Disregard wireload
+# set_parameter pe_zero_wireload yes
+#   set_parameter pe_activity_hier_depth 3
+# waivers
+# read_file -type awl waivers.awl
+

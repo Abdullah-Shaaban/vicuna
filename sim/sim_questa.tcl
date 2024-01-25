@@ -31,7 +31,8 @@ set MUL_TYPE "0"
 # create source file list
 lappend src_list "$vproc_dir/rtl/vproc_pkg.sv"
 lappend src_list "$config_file_path"
-lappend src_list "$vproc_dir/sim/vproc_tb.sv"
+# lappend src_list "$vproc_dir/sim/vproc_tb.sv"
+lappend src_list "$vproc_dir/sim/vproc_tb_pwr.sv"
 set main_core ""
 if {[string first "ibex" $core_dir] != -1} {
     set main_core "MAIN_CORE_IBEX"
@@ -60,35 +61,40 @@ vlib work
 
 foreach file $src_list {vlog -work work $file +define+$main_core +incdir+$prim+$dv_utils}
 
-vopt +acc vproc_tb -o vproc_tb_opt -debugdb -G VMEM_W=$VMEM_W      \
+# vopt +acc=r+/ 
+vopt -debug,cell \
+     vproc_tb -o vproc_tb_opt -debugdb -G VMEM_W=$VMEM_W      \
      -G MEM_W=$MEM_W -G MEM_SZ=$MEM_SZ -G MEM_LATENCY=$MEM_LATENCY \
      -G ICACHE_SZ=$ICACHE_SZ -G ICACHE_LINE_W=$ICACHE_LINE_W       \
      -G DCACHE_SZ=$DCACHE_SZ -G DCACHE_LINE_W=$DCACHE_LINE_W       \
      -G VREG_TYPE=$VREG_TYPE -G MUl_TYPE=$MUL_TYPE                 \
-     +define+$main_core -G PROG_PATHS_LIST=$prog_paths_var
+     +define+$main_core -G PROG_PATHS_LIST=$prog_paths_var         \
+     -suppress 7061
 
-vsim -work work vproc_tb_opt
+# vsim -work work vproc_tb_opt
+vsim vproc_tb_opt -suppress 12130
 
 # add all signals
 add wave -r /*
+# log -r /*
 
 set complete_signal "done"
 
-set outf [open $log_file_path "w"]
-puts "logging following signals to $log_file_path: $log_signals"
+# set outf [open $log_file_path "w"]
+# puts "logging following signals to $log_file_path: $log_signals"
 
-foreach sig $log_signals {
-    set sig_name_start [string wordstart $sig end]
-    puts -nonewline $outf "[string range $sig $sig_name_start end];"
-}
-puts $outf ""
+# foreach sig $log_signals {
+#     set sig_name_start [string wordstart $sig end]
+#     puts -nonewline $outf "[string range $sig $sig_name_start end];"
+# }
+# puts $outf ""
 
 for {set step 0} 1 {incr step} {
     # log the value of each signal
-    foreach sig $log_signals {
-        puts -nonewline $outf "[examine -noshowbase $sig];"
-    }
-    puts $outf ""
+    # foreach sig $log_signals {
+    #     puts -nonewline $outf "[examine -noshowbase $sig];"
+    # }
+    # puts $outf ""
     # advance by 1 clock cycle
     run 10 ns
 
@@ -98,5 +104,4 @@ for {set step 0} 1 {incr step} {
         break
     }
 }
-
 exit -f

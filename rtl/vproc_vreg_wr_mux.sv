@@ -38,7 +38,8 @@ module vproc_vreg_wr_mux import vproc_pkg::*; #(
     // vector register addresses)
     localparam int unsigned PEND_CLEAR_CNT_W = $clog2(VADDR_W-1);
 
-    function static int unsigned MAX_WR_ATTEMPTS(int unsigned PIPE_IDX);
+    // function static int unsigned MAX_WR_ATTEMPTS(int unsigned PIPE_IDX);
+    function int unsigned MAX_WR_ATTEMPTS(int unsigned PIPE_IDX);
         MAX_WR_ATTEMPTS = 1;
         for (int i = 0; i < PIPE_IDX; i++) begin
             if (PIPE_VPORT_WR[i] == PIPE_VPORT_WR[PIPE_IDX]) begin

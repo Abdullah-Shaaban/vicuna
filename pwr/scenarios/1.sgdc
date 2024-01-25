@@ -1,0 +1,21 @@
+# Current Design
+current_design vproc_top
+# Specify the clock
+clock -name clk_i
+    # When I ran power_activity_check, I got the following Warning: All 'clock' information in constraint file is ignored while estimating power (or activity)
+
+
+# current scenario
+ activity_data \
+  -format vcd \
+  -file scenarios/vsld.vcd \
+  -sim_topname vproc_tb.top
+  #-sim_topname vproc_tb.top
+
+#activity_data \
+#  -format fsdb \
+#  -file scenarios/vsld.vcd.fsdb \
+#  -sim_topname vproc_tb.top
+
+# Defines which instances should be logged for visual inspection. Used in the goal "power_activity_check"
+instance_trace -name vproc_top -instname vproc_top

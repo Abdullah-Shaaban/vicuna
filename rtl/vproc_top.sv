@@ -6,7 +6,7 @@
 module vproc_top import vproc_pkg::*; #(
         parameter int unsigned     MEM_W         = 32,  // memory bus width in bits
         parameter int unsigned     VMEM_W        = 32,  // vector memory interface width in bits
-        parameter vreg_type        VREG_TYPE     = VREG_GENERIC,
+        parameter vreg_type        VREG_TYPE     = VREG_ASIC,
         parameter mul_type         MUL_TYPE      = MUL_GENERIC,
         parameter int unsigned     ICACHE_SZ     = 0,   // instruction cache size in bytes
         parameter int unsigned     ICACHE_LINE_W = 128, // instruction cache line width in bits
@@ -410,7 +410,7 @@ module vproc_top import vproc_pkg::*; #(
         .MUL_TYPE           ( MUL_TYPE           ),
         .VLSU_FLAGS         ( VLSU_FLAGS         ),
         .BUF_FLAGS          ( BUF_FLAGS          ),
-        .DONT_CARE_ZERO     ( 1'b0               ),
+        .DONT_CARE_ZERO     ( 1'b1               ),
         .ASYNC_RESET        ( 1'b0               )
     ) v_core (
         .clk_i              ( clk_i              ),

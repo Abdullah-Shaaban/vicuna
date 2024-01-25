@@ -157,7 +157,6 @@ module vproc_vregfile #(
                 end
 
                 vproc_pkg::VREG_ASIC: begin
-                    for (genvar gr = 0; gr < PORT_RD_CNT_TOTAL; gr++) begin
                         always_ff @(posedge clk_i) begin
                             for (int i = 0; i < MAX_PORT_W / 8; i++) begin
                                 if (wr_we_i[gw] & wr_be_i[gw][i]) begin
@@ -165,6 +164,8 @@ module vproc_vregfile #(
                                 end
                             end
                         end
+                    for (genvar gr = 0; gr < PORT_RD_CNT_TOTAL; gr++) begin
+                        
                         assign rd_data[gr][gw] = ram_asic[rd_addr[gr][gw]];
                     end
                 end

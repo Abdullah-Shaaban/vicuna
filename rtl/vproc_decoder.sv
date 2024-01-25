@@ -5,7 +5,7 @@
 
 module vproc_decoder #(
         parameter int unsigned          CFG_VL_W           = 7,    // width of VL CSR register
-        parameter int unsigned          XIF_MEM_W          = 0,    // width of XIF mem iface
+        parameter int unsigned          XIF_MEM_W          = 32,    // width of XIF mem iface
         parameter bit                   ALIGNED_UNITSTRIDE = 1'b0, // aligned unit-stride only
         parameter bit                   DONT_CARE_ZERO     = 1'b0
     )(

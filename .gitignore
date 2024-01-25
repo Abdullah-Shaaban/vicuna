@@ -26,4 +26,18 @@
 *.fst
 *.fst.hier
 *.gtkw
-vproc_config.sv
+*.vdb
+*.wlf
+*.fsdb
+
+# Others
+*.do
+syn/WORK
+syn/vec_trial-master/
+syn/results
+syn/reports
+syn/alib-52/tcbn55lpbwp7t_1V0SS-40C.db.alib
+pwr/results
+.vscode
+methodology
+spy_NOT_USED

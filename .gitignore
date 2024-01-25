@@ -41,3 +41,4 @@ pwr/results
 .vscode
 methodology
 spy_NOT_USED
+sim/tmp/*

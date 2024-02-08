@@ -1,4 +1,4 @@
-# Frequency constraint: 250MHz
+# Frequency constraint: 400MHz
 create_clock "clk_i" -period 2.5
 # set_max_delay 4.0 -to [get_clocks clk_i]
 # Set the input delay for a clock
